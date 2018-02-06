@@ -973,8 +973,6 @@ F 3 "" H 8300 2600 50  0001 C CNN
 	1    8300 2600
 	1    0    0    -1  
 $EndComp
-Text Label 5550 2700 2    60   ~ 0
-FPGA_VCC
 $Comp
 L GND #PWR018
 U 1 1 5A5E8AFA
@@ -1205,7 +1203,7 @@ U 1 1 5A626A3E
 P 5800 1700
 F 0 "J1" H 5850 2700 50  0000 C CNN
 F 1 "FPGA connection" H 5850 600 50  0000 C CNN
-F 2 "Pin_Headers:Pin_Header_Straight_2x20_Pitch2.54mm" H 5800 1700 50  0001 C CNN
+F 2 "Connectors_IDC:IDC-Header_2x20_Pitch2.54mm_Straight" H 5800 1700 50  0001 C CNN
 F 3 "" H 5800 1700 50  0001 C CNN
 	1    5800 1700
 	1    0    0    -1  
@@ -1577,5 +1575,16 @@ F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 5250 6950 50  0001 C CN
 F 3 "" H 5250 6950 50  0001 C CNN
 	1    5250 6950
 	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR031
+U 1 1 5A68ECBF
+P 5400 2700
+F 0 "#PWR031" H 5400 2450 50  0001 C CNN
+F 1 "GND" H 5400 2550 50  0000 C CNN
+F 2 "" H 5400 2700 50  0001 C CNN
+F 3 "" H 5400 2700 50  0001 C CNN
+	1    5400 2700
+	0    1    1    0   
 $EndComp
 $EndSCHEMATC
