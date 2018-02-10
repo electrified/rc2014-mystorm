@@ -1,4 +1,4 @@
-update=Mon 15 Jan 2018 21:12:48 GMT
+update=Sat 10 Feb 2018 20:39:23 GMT
 version=1
 last_client=kicad
 [pcbnew]
@@ -59,4 +59,3 @@ LibName27=opto
 LibName28=atmel
 LibName29=contrib
 LibName30=valves
-LibName31=jumper_dual

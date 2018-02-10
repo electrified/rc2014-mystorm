@@ -29,7 +29,6 @@ LIBS:opto
 LIBS:atmel
 LIBS:contrib
 LIBS:valves
-LIBS:jumper_dual
 LIBS:rc2014-mystorm-cache
 EELAYER 25 0
 EELAYER END
