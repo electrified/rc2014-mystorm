@@ -9,3 +9,8 @@ LD1117S33TR
 100nF 0805 capacitors
 
 10μF 0805 capacitors
+
+
+OE low = enable
+dir rc ->fpga
+
