@@ -32,8 +32,8 @@ set_io A[3] 114 #P17
 set_io A[1] 143 #P16
 
 #pmod 7
-set_io RD 3 #P31
-set_io M1 4 #P30
+set_io M1 3 #P31
+set_io RD 4 #P30
 set_io CLK 7 #P29
 set_io MRQ 8 #P28
 

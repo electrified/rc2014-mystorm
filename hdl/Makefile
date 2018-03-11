@@ -1,4 +1,4 @@
-chip.bin: src/rc2014_interface_top.v src/rc2014_interface.pcf src/ram.v
+chip.bin: src/rc2014_interface_top.v src/rc2014_interface.pcf src/ram.v src/rom.v
 	yosys -p "synth_ice40 -blif chip.blif" src/*.v
 	arachne-pnr -d 8k -P tq144:4k -p src/rc2014_interface.pcf chip.blif -o chip.txt
 	icepack chip.txt chip.bin

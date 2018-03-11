@@ -1,3 +1,5 @@
+`default_nettype none
+
 module vga_mem(
     input [15:0] A,
     inout [7:0] D,
@@ -24,16 +26,14 @@ module vga_mem(
     );
 
 reg [23:0] led_countdown = 0;
-// reg ce;
+reg ce = 0;
 
 // assign ce = !MRQ && A[15:0] >= 16'h8000;
 
-ram blockram(.clk(CLK), 
-.ce(ce),
-.wen(!WR), 
-.addr(A[15:0] - 16'h8000), 
-.rdata(data_out),
-.wdata(data_in));
+rom blockram(.clk(CLK), 
+  .ce(1),
+  .addr(A[12:0]), 
+  .rdata(data_out));
 
 reg [7:0] data_in;
 reg [7:0] data_out;
@@ -51,7 +51,9 @@ SB_IO #(
 // !WR &&  && a[7:0] == 8'hC0
 always @(posedge CLK)
 begin
-    if (((!WR && !MRQ && A >= 16'h8000) || !BUT1) && led_countdown == 0)
+    ce = (A < 16'h2000) && !MRQ && !RD;
+
+    if ((ce || !BUT1) && led_countdown == 0)
     begin
       led_countdown <= 24'hFFFFFF;
     end
@@ -61,13 +63,15 @@ begin
     end
 
     // DATA_DIR = (!MRQ && A >= 16'h8000) && WR && !RD ? 1 : 0;
-    ce = !MRQ && A >= 16'h8000;
+
     // RAMWE_b = !WR;
     // RAMOE_b = !RD;
     // RAMCS_b = cs;
     // ADR = A;
     // DAT = D;
-    DATA_DIR = cs && WR && !RD ? 1 : 0;
+    // 0 = input, 1 = output
+    // DATA_DIR = ce && !MRQ && WR && !RD ? 1 : 0;
+    DATA_DIR = ce;
 end
 // 0 when !WR && RD, 1 when WR && !RD
 assign LED1 = led_countdown > 0;

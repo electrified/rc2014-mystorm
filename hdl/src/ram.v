@@ -8,7 +8,7 @@ output reg [7:0] rdata);
     //     $readmemh("flag.txt", mem);
     // end
 
-    reg [7:0] mem [0:16000];
+    reg [7:0] mem [0:16383];
     // initial mem[0] = 255;
     always @(posedge clk) begin
         if (ce)

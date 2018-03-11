@@ -14,3 +14,9 @@ LD1117S33TR
 OE low = enable
 dir rc ->fpga
 
+objcopy -Iihex -Obinary nascom32k_hexloadr.hex out.bin
+
+
+Silkscreen blunders
+
+On the fpga connector, silscreen for M1 and RD should be swapped
