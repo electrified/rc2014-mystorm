@@ -9,61 +9,61 @@ set_io BUT1 63 #B1
 
 set_io uart_tx 85 # rd0
 
-#pmod 3
+#pmod 4
 set_io A[14] 96 #P15
 set_io A[12] 98 #P14
 set_io A[10] 101 #P13
 set_io A[8] 104 #P12
 
-#pmod 4
+#pmod 3
 set_io A[15] 97 #P11
 set_io A[13] 99 #P10
 set_io A[11] 102 #P9
 set_io A[9] 105 #P8
 
-#pmod 5
+#pmod 6
 set_io A[6] 106 #P23
 set_io A[4] 110 #P22
 set_io A[2] 113 #P21
 set_io A[0] 144 #P20
 
-#pmod 6
+#pmod 5
 set_io A[7] 107 #P19
 set_io A[5] 112 #P18
 set_io A[3] 114 #P17
 set_io A[1] 143 #P16
 
-#pmod 7
+#pmod 8
 set_io M1 3 #P31
 set_io RD 4 #P30
 set_io CLK 7 #P29
 set_io MRQ 8 #P28
 
-#pmod 8
+#pmod 7
 set_io IORQ 1 #P27
 set_io RST 2 #P26
 set_io INT 9 #P25
 set_io WR 10 #P24
 
-#pmod 9
+#pmod 10
 set_io D[0] 11 #P39
 set_io D[2] 12 #P38
 set_io D[4] 17 #P37
 set_io D[6] 18 #P36
 
-#pmod 10
+#pmod 9
 set_io D[1] 15 #P35
 set_io D[3] 16 #P34
 set_io D[5] 19 #P33
 set_io D[7] 20 #P32
 
-#pmod 11
+#pmod 12
 set_io ADDR_DIR 25 #P47
 set_io SIG_DIR 26 #P46
 set_io EX7 31 #P45
 #set_io EX[5] 32 #P44
 
-#pmod 12
+#pmod 11
 set_io DATA_DIR 21 #P43
 set_io SIG2_DIR 22 #P42
 #set_io EX[6] 33 #P41

@@ -11,5 +11,10 @@ upload:
 clean:
 	$(RM) -f chip.blif chip.txt chip.ex chip.bin
 .PHONY: serial
+
+run:
+	stty -F /dev/ttyUSB1 115200 raw
+	cat /dev/ttyUSB1
+
 serial:
 	sudo (stty raw -echo;cat) < /dev/ttyACM0 &
