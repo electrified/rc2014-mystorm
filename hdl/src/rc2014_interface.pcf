@@ -58,9 +58,9 @@ set_io D[5] 19 #P33
 set_io D[7] 20 #P32
 
 #pmod 12
-set_io ADDR_DIR 25 #P47
+set_io DATA_OE 25 #P47 #this is now data OE was ADDR_DIR
 set_io SIG_DIR 26 #P46
-set_io EX7 31 #P45
+#set_io EX7 31 #P45
 #set_io EX[5] 32 #P44
 
 #pmod 11

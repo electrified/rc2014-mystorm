@@ -6,7 +6,7 @@ output reg [7:0] rdata);
         $readmemh("src/bas.hex", mem);
     end
 
-    reg [7:0] mem [0:8191];
+    reg [7:0] mem [0:'h2000];
     always @(posedge clk) begin
         if (ce)
         begin

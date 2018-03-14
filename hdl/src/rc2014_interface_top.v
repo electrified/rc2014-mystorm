@@ -2,7 +2,7 @@
 
 module vga_mem(
     input [15:0] A,
-    input [7:0] D,
+    inout [7:0] D,
     input RD,
     input M1,
     input CLK,
@@ -11,13 +11,12 @@ module vga_mem(
     input RST,
     input INT,
     input WR,
-    output ADDR_DIR,
+    output DATA_OE,
     output SIG_DIR,
     output DATA_DIR,
     output SIG2_DIR,
     output LED1,
     input BUT1,
-    output EX7,
 	output uart_tx,
 	input clk,
 	input greset
@@ -32,8 +31,6 @@ module vga_mem(
 reg [23:0] led_countdown = 0;
 reg ce = 0;
 
-// assign ce = !MRQ && A[15:0] >= 16'h8000;
-
 rom blockram(.clk(CLK), 
   .ce(1),
   .addr(A[12:0]), 
@@ -42,22 +39,27 @@ rom blockram(.clk(CLK),
 reg [7:0] data_in;
 reg [7:0] data_out;
 
-// SB_IO #(
-//   .PIN_TYPE(6'b 1010_01),
-//   .PULLUP(1'b 0)
-// ) led_io[7:0] (
-//   .PACKAGE_PIN(D[0]),
-//   .OUTPUT_ENABLE(DATA_DIR),
-//   .D_OUT_0(data_out),
-//   .D_IN_0(data_in)
-// );
+SB_IO #(
+  .PIN_TYPE(6'b 1010_01),
+  .PULLUP(1'b 0)
+) led_io[7:0] (
+  .PACKAGE_PIN(D),
+  .OUTPUT_ENABLE(DATA_DIR),
+  .D_OUT_0(data_out),
+  .D_IN_0(data_in)
+);
 
 reg [15:0] lastknownaddress = 0;
 reg [7:0] lastknownvalue = 0;
 // !WR &&  && a[7:0] == 8'hC0
 always @(posedge CLK)
 begin
-    ce = (A == 16'hffff) && !MRQ && !WR;        
+/*
+$0000 - $1FFF 8k BASIC ROM
+$2000 - $7FFF unused
+$8000 - $FFFF 32k RAM
+*/
+    ce = (A > 16'h2000 && A < 16'h8000) && !MRQ;        
 
     if ((ce || !BUT1) && led_countdown == 0)
     begin
@@ -71,23 +73,20 @@ begin
 	if (ce)
 	begin
 		lastknownaddress <= A;
-		lastknownvalue <= D;
-	end
-    // DATA_DIR = (!MRQ && A >= 16'h8000) && WR && !RD ? 1 : 0;
 
-    // RAMWE_b = !WR;
-    // RAMOE_b = !RD;
-    // RAMCS_b = cs;
-    // ADR = A;
-    // DAT = D;
-    // 0 = input, 1 = output
-    // DATA_DIR = ce && !MRQ && WR && !RD ? 1 : 0;
-    DATA_DIR = 0; //ce;
-    EX7 = 1; //!ce;
+		if (!WR)
+			lastknownvalue <= data_in;
+		else if (!RD)
+			lastknownvalue <= data_out;
+	end
+
+    DATA_DIR = 0; //ce && !RD; 
+	DATA_OE = !(ce && !RD);
 end
+// assign DATA_OE = 0;
 // 0 when !WR && RD, 1 when WR && !RD
 assign LED1 = led_countdown > 0;
-assign ADDR_DIR = 0;
+// assign ADDR_DIR = 0;
 assign SIG_DIR = 0;
 assign SIG2_DIR = 0;
 // assign DATA_DIR = ce && WR && !RD ? 1 : 0;
