@@ -17,4 +17,4 @@ run:
 	cat /dev/ttyUSB1
 
 serial:
-	sudo (stty raw -echo;cat) < /dev/ttyACM0 &
+	(stty raw -echo;cat) < /dev/ttyACM0 &

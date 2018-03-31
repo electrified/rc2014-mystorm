@@ -20,12 +20,6 @@ module vga_mem(
 	output uart_tx,
 	input clk,
 	input greset
-    //     // External RAM
-    // output        RAMWE_b,
-    // output        RAMOE_b,
-    // output RAMCS_b,
-    // output [17:0] ADR,
-    // inout [7:0] DAT,
     );
 
 reg [23:0] led_countdown = 0;
@@ -59,7 +53,7 @@ $0000 - $1FFF 8k BASIC ROM
 $2000 - $7FFF unused
 $8000 - $FFFF 32k RAM
 */
-    ce = (A > 16'h2000 && A < 16'h8000) && !MRQ;        
+    ce = (A >= 16'h2000 && A < 16'h4000) && !MRQ;        
 
     if ((ce || !BUT1) && led_countdown == 0)
     begin
