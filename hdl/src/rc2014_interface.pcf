@@ -7,7 +7,7 @@ set_io LED1 71 #P52
 set_io BUT1 63 #B1
 #set_io BUT2 64 #B1
 
-set_io uart_tx 85 # rd0
+#set_io uart_tx 85 # rd0
 
 #pmod 4
 set_io A[14] 96 #P15
@@ -58,13 +58,13 @@ set_io D[5] 19 #P33
 set_io D[7] 20 #P32
 
 #pmod 12
-set_io DATA_OE 25 #P47 #this is now data OE was ADDR_DIR
-set_io SIG_DIR 26 #P46
+set_io ADDR_DIR 25 #P47 #this is now data OE was ADDR_DIR
+set_io DATA_DIR 26 #P46
 #set_io EX7 31 #P45
 #set_io EX[5] 32 #P44
 
 #pmod 11
-set_io DATA_DIR 21 #P43
+set_io SIG_DIR 21 #P43
 set_io SIG2_DIR 22 #P42
 #set_io EX[6] 33 #P41
 #set_io EX[4] 34 #P40
@@ -118,5 +118,5 @@ set_io SIG2_DIR 22 #P42
 # set_io RAMCS_b 136
 
 # Onboard 12Mhz oscillator
-set_io clk 129
+#set_io clk 129
 
