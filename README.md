@@ -23,3 +23,4 @@ Silkscreen blunders
 On the fpga connector, silscreen for M1 and RD should be swapped
 
 
+https://bitbucket.org/gdevic/a-z80/src/6d6bd4838181ea9e088e6c1f7c68e4f11ce58183/host/basic_de1/basic_de1_fpga.sv?at=master&fileviewer=file-view-default

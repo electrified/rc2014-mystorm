@@ -20,16 +20,23 @@ module vga_mem(
     );
 
 reg [15:0] led_countdown = 0;
+
+reg [7:0] request_counter =0;
 reg ce = 0;
+
+wire DATA_OE;
+assign ADDR_DIR = DATA_OE;
+
+reg [7:0] romval;
 
 rom blockram(.clk(CLK), 
   .ce(1),
   .addr(A[12:0]), 
-  .rdata(D));
+  .rdata(romval));
 
-always @(posedge CLK)
+always @(negedge CLK)
 begin
-    ce = (A >= 16'h0000 && A < 16'h1000) && !MRQ;        
+    ce = (A >= 16'h0000 && A < 16'h2000) && !MRQ;
 
     if ((ce || !BUT1) && led_countdown == 0)
     begin
@@ -39,8 +46,26 @@ begin
     begin
       led_countdown <= led_countdown -1;
     end
-end
 
+    case({MRQ, RD, WR})
+    3'b001:
+      begin
+      // DATA_OE <= 0;
+      D <= romval;
+      end
+    3'b101:
+    begin
+    //  DATA_OE <= 0;
+     request_counter <= request_counter + 1;
+     D <= request_counter;
+    end
+    default:
+      begin
+      // DATA_OE <= 1;
+      D[7:0] = {8{1'bz}};
+      end
+    endcase
+end
 
 assign LED1 = led_countdown > 0;
 
@@ -48,5 +73,5 @@ assign LED1 = led_countdown > 0;
 assign SIG_DIR = 0;
 assign SIG2_DIR = 0;
 assign DATA_DIR = 1;
-assign ADDR_DIR = 0;
+assign DATA_OE = !(!RD && (!MRQ || !IORQ));  //ce; //0 == output
 endmodule

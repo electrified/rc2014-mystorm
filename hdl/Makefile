@@ -25,5 +25,5 @@ serial:
 	(stty raw -echo;cat) < /dev/ttyACM0 &
 
 capture:
-	sigrok-cli --driver saleae-logic16 --config samplerate=20Mhz --channels 0=D0,1=D1,2=D2,3=D3,4=D4,5=D5,6=D6,7=D7,9=RD,10=WR,11=MREQ,13=M1 \
+	sigrok-cli --driver saleae-logic16 --config samplerate=20Mhz --channels 0=D0,1=D1,2=D2,3=D3,4=D4,5=D5,6=D6,7=D7,9=RD,10=WR,11=MREQ,12=CLK,13=M1,14=DATA_OE \
 	--samples 10M --output-file z80-fpga.sr
