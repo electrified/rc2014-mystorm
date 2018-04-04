@@ -24,8 +24,8 @@ reg [15:0] led_countdown = 0;
 reg [7:0] request_counter =0;
 reg ce = 0;
 
-wire DATA_OE;
-assign ADDR_DIR = DATA_OE;
+// wire DATA_OE;
+// assign ADDR_DIR = DATA_OE;
 
 reg [7:0] romval;
 
@@ -73,5 +73,7 @@ assign LED1 = led_countdown > 0;
 assign SIG_DIR = 0;
 assign SIG2_DIR = 0;
 assign DATA_DIR = 1;
-assign DATA_OE = !(!RD && (!MRQ || !IORQ));  //ce; //0 == output
+
+// THIS IS ACTUALLY DATA_OE
+assign ADDR_DIR = RD; //!(!RD && (!MRQ || !IORQ));  //ce; //0 == output
 endmodule
