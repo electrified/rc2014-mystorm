@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name rc2014-mystorm-rescue)(type Legacy)(uri ${KIPRJMOD}/rc2014-mystorm-rescue.lib)(options "")(descr ""))
+  (lib (name rc2014-mystorm)(type Legacy)(uri ${KIPRJMOD}/rc2014-mystorm.lib)(options "")(descr ""))
+)

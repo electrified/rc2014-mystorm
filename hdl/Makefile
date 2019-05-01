@@ -1,9 +1,9 @@
-chip.bin: src/rc2014_interface_top.v src/rc2014_interface.pcf src/rom.v src/test_programs/test.out
-	yosys -q -p "synth_ice40 -blif chip.blif"  src/rc2014_interface_top.v src/rom.v
+chip.bin: src/rc2014_interface_top.v src/rc2014_interface.pcf src/rom.v src/test_programs/test.out src/debouncer.v
+	yosys -q -p "synth_ice40 -blif chip.blif"  src/rc2014_interface_top.v src/rom.v src/debouncer.v
 	arachne-pnr -d 8k -P tq144:4k -p src/rc2014_interface.pcf chip.blif -o chip.txt
 	icepack chip.txt chip.bin
 
-src/test_programs/test.out:  src/test_programs/test.asm
+z80:  src/test_programs/test.asm
 	z80asm -l -b src/test_programs/test.asm
 	appmake +rom -b src/test_programs/test.bin --org 0 --ihex
 	objcopy -Iihex -Overilog src/test_programs/test.ihx src/test_programs/test.out

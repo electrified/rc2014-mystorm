@@ -118,5 +118,5 @@ set_io SIG2_DIR 22 #P42
 # set_io RAMCS_b 136
 
 # Onboard 12Mhz oscillator
-#set_io clk 129
+set_io fpga_clk 129
 

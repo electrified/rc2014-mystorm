@@ -17,6 +17,7 @@ module vga_mem(
     output SIG2_DIR,
     output LED1,
     input BUT1,
+    input fpga_clk
     );
 
 reg [15:0] led_countdown = 0;
@@ -34,7 +35,23 @@ rom blockram(.clk(CLK),
   .addr(A[12:0]), 
   .rdata(romval));
 
-always @(negedge CLK)
+reg debounced_CLK;
+
+debouncer clockdebouncer(
+  .CLK(fpga_clk),
+  .raw_input(CLK),
+  .state(debounced_CLK)
+);
+
+reg debounced_RD;
+
+debouncer RDdebouncer(
+  .CLK(fpga_clk),
+  .raw_input(RD),
+  .state(debounced_RD)
+);
+
+always @(posedge debounced_CLK)
 begin
     ce = (A >= 16'h0000 && A < 16'h2000) && !MRQ;
 
@@ -75,5 +92,5 @@ assign SIG2_DIR = 0;
 assign DATA_DIR = 1;
 
 // THIS IS ACTUALLY DATA_OE
-assign ADDR_DIR = RD; //!(!RD && (!MRQ || !IORQ));  //ce; //0 == output
+assign ADDR_DIR = RD;//M1; //debounced_RD; //!(!RD && (!MRQ || !IORQ));  //ce; //0 == output
 endmodule
