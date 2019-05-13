@@ -1,0 +1,3 @@
+read_verilog src/rc2014_interface_top.v src/rom.v src/debouncer.v
+synth_ice40 -blif chip.blif -top rc2014_interface_top
+write_json chip.json

@@ -1,8 +1,8 @@
 `default_nettype none
 
-module vga_mem(
+module rc2014_interface_top(
     input [15:0] A,
-    output [7:0] D,
+    input [7:0] D,
     input RD,
     input M1,
     input CLK,
@@ -20,13 +20,16 @@ module vga_mem(
     input fpga_clk
     );
 
-reg [15:0] led_countdown = 0;
+assign SIG_DIR = 0;
+assign SIG2_DIR = 0;
+assign DATA_DIR = 1;
+assign ADDR_DIR = RD;
 
+reg [31:0] led_countdown = 0;
+wire led_track;
+ 
 reg [7:0] request_counter =0;
 reg ce = 0;
-
-// wire DATA_OE;
-// assign ADDR_DIR = DATA_OE;
 
 reg [7:0] romval;
 
@@ -51,46 +54,25 @@ debouncer RDdebouncer(
   .state(debounced_RD)
 );
 
-always @(posedge debounced_CLK)
+reg debounced_BUT1;
+
+debouncer BUT1debouncer(
+  .CLK(CLK),
+  .raw_input(BUT1),
+  .state(debounced_BUT1)
+);
+
+
+always @(posedge debounced_BUT1)
 begin
-    ce = (A >= 16'h0000 && A < 16'h2000) && !MRQ;
-
-    if ((ce || !BUT1) && led_countdown == 0)
-    begin
-      led_countdown <= 16'hFFFF;
-    end
-    else if(led_countdown > 0)
-    begin
-      led_countdown <= led_countdown -1;
-    end
-
-    case({MRQ, RD, WR})
-    3'b001:
-      begin
-      // DATA_OE <= 0;
-      D <= romval;
-      end
-    3'b101:
-    begin
-    //  DATA_OE <= 0;
-     request_counter <= request_counter + 1;
-     D <= request_counter;
-    end
-    default:
-      begin
-      // DATA_OE <= 1;
-      D[7:0] = {8{1'bz}};
-      end
-    endcase
+    // ce = (A >= 16'h0000 && A < 16'h2000) && !MRQ;
+  // if (BUT1 == 1'b0)
+  //    begin
+        // led_countdown <= 0;
+	      // // led_track <= 1'b0;
+        led_track <= ~led_track;
+    //  end
 end
 
-assign LED1 = led_countdown > 0;
-
-// assign D = 8'hAA;
-assign SIG_DIR = 0;
-assign SIG2_DIR = 0;
-assign DATA_DIR = 1;
-
-// THIS IS ACTUALLY DATA_OE
-assign ADDR_DIR = RD;//M1; //debounced_RD; //!(!RD && (!MRQ || !IORQ));  //ce; //0 == output
+assign LED1 = led_track;
 endmodule
